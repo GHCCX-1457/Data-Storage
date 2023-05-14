@@ -1,0 +1,421 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>职业病数据存储与可视化</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="manifest" href="site.webmanifest">
+		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+        <link rel="stylesheet" href="assets/css/elementUI/index.css">
+        <!-- CSS here -->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="assets/css/flaticon.css">
+        <link rel="stylesheet" href="assets/css/slicknav.css">
+        <link rel="stylesheet" href="assets/css/animate.min.css">
+        <link rel="stylesheet" href="assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="assets/css/themify-icons.css">
+        <link rel="stylesheet" href="assets/css/slick.css">
+        <link rel="stylesheet" href="assets/css/nice-select.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/responsive.css">
+        <style>
+            .el-dropdown {
+                vertical-align: top;
+            }
+            .el-dropdown + .el-dropdown {
+                margin-left: 15px;
+            }
+            .el-icon-arrow-down {
+                font-size: 12px;
+            }
+        </style>
+   </head>
+
+   <body>
+       
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="assets/img/logo/logo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+    <header>
+        <!-- Header Start -->
+       <div class="header-area header-transparrent ">
+            <div class="main-header header-sticky">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <!-- Logo -->
+                        <div class="col-xl-2 col-lg-2 col-md-1">
+                            <div class="logo">
+                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-xl-8 col-lg-8 col-md-8">
+                            <!-- Main-menu -->
+                            <div class="main-menu f-right d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a href="index.html">主页</a></li>
+                                        <li><a href="information.html">信息</a></li>
+                                        <li><a href="chars.html">图表</a>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+        <!-- Header End -->
+    </header>
+    <main>
+        <!-- Slider Area Start-->
+        <div class="slider-area">
+            <div class="slider-active">
+                <div class="single-slider slider-height d-flex align-items-center">
+                    <div class="container">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-lg-5 d-none d-xl-block">
+                                <div class="hero__img hero__img2 " data-animation="fadeInLeft" data-delay="1s">
+                                    <img src="assets/img/hero/about_hero.png" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-9 ">
+                                <div class="hero__caption hero__caption2">
+                                    <h1 data-animation="fadeInRight" data-delay=".4s">分页表格<br> Pagination Table </h1>
+                                    <p data-animation="fadeInRight" data-delay=".6s">数据库中的数据以分页的表格进行展示，同时增加了表格的检索功能</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                 <div class="single-slider slider-height slider-height2 d-flex align-items-center">
+                    <div class="container">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-lg-5 d-none d-xl-block">
+                                <div class="hero__img hero__img2 " data-animation="fadeInLeft" data-delay="1s">
+                                    <img src="assets/img/hero/about_hero.png" alt="">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- about shape -->
+            <div class="about-shape">
+                <div class="shape-left">
+                    <img src="assets/img/hero/about_shape1.png" alt="">
+                </div>
+                <div class="shape-right">
+                    <img src="assets/img/hero/about-sharpe2.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="slider-area" id="app" style="margin: 75px 200px">
+            <div class="demo-input-suffix">
+                <el-input
+                        v-model="searchContent"
+                        placeholder="请输入关键字"
+                        size="medium"
+                        style="width:400px;margin-bottom:20px"
+                        @input="change($event)"
+                        clearable
+                ></el-input>
+                <el-button type="primary" icon="el-icon-search"
+                           style="margin-left: 10px" @click="search()">搜索</el-button>
+                <el-button type="success"
+                           style="margin-left: 10px" @click="reset()">重置</el-button>
+                <el-dropdown>
+                    <el-button type="primary" style="margin-left: 10px">
+                        其他表格<i class="el-icon-arrow-down el-icon--right"></i>
+                    </el-button>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item @click.native="symptom()">症状</el-dropdown-item>
+                        <el-dropdown-item @click.native="hazardfactor()">危害因素</el-dropdown-item>
+                        <el-dropdown-item @click.native="maydisease()">疑似职业病</el-dropdown-item>
+                        <el-dropdown-item @click.native="region()">地区</el-dropdown-item>
+                        <el-dropdown-item @click.native="workcode()">工种代码</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+            <!-- 表格 -->
+
+
+            <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%">
+                <el-table-column prop="code" label="编码" width="500">
+                </el-table-column>
+                <el-table-column prop="name" label="名称" width="600">
+                </el-table-column>
+                </el-table-column>
+            </el-table>
+            <!-- 分页器 -->
+            <div class="block" style="margin-top:15px;">
+                <el-pagination align='center' @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                               :current-page="currentPage"
+                               :page-sizes="[1,5,10,20]"
+                               :page-size="pageSize"
+                               layout="total, sizes, prev, pager, next, jumper"
+                               :total="tableData.length">
+                </el-pagination>
+            </div>
+        </div>
+
+
+
+    </main>
+    <footer>
+
+        <!-- Footer Start-->
+        <div class="footer-main" data-background="assets/img/shape/footer_bg.png">
+            <div class="footer-area footer-padding">
+                <div class="container">
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-lg-3 col-md-4 col-sm-8">
+                            <div class="single-footer-caption mb-50">
+                                <div class="single-footer-caption mb-30">
+                                    <!-- logo -->
+                                    <div class="footer-logo">
+                                        <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                                    </div>
+                                    <div class="footer-tittle">
+                                        <div class="footer-pera">
+                                            <p class="info1">2022 12 maked by <br> PTU ccx</p>
+                                            <p class="info2">info@2867567060@qq.com</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-5">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>快速链接</h4>
+                                    <ul>
+                                        <li><a href="index.html">主页</a></li>
+                                        <li><a href="information.html">信息</a></li>
+                                        <li><a href="chars.html">图表</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-7">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>技术支持</h4>
+                                    <ul>
+                                        <li><a href="#">spring boot</a></li>
+                                        <li><a href="#">html css js</a></li>
+                                        <li><a href="#">vue</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-5">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>特色功能</h4>
+                                    <ul>
+                                        <li><a href="#">前端美化</a></li>
+                                        <li><a href="#">分页表格</a></li>
+                                        <li><a href="#">Echars图表</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- footer-bottom aera -->
+            <div class="footer-bottom-area footer-bg">
+                <div class="container">
+                    <div class="footer-border">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-xl-12 ">
+                                <div class="footer-copy-right text-center">
+                                    <p>
+                                        &copy;<script>document.write(new Date().getFullYear());</script>  | This Web is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://www.ptu.edu.cn" target="_blank">PTU</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+
+    </footer>
+   
+	<!-- JS here -->
+	
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./assets/js/popper.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="./assets/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="./assets/js/owl.carousel.min.js"></script>
+    <script src="./assets/js/slick.min.js"></script>
+    <!-- Date Picker -->
+    <script src="./assets/js/gijgo.min.js"></script>
+    <!-- One Page, Animated-HeadLin -->
+    <script src="./assets/js/wow.min.js"></script>
+    <script src="./assets/js/animated.headline.js"></script>
+    <script src="./assets/js/jquery.magnific-popup.js"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="./assets/js/jquery.scrollUp.min.js"></script>
+    <script src="./assets/js/jquery.nice-select.min.js"></script>
+    <script src="./assets/js/jquery.sticky.js"></script>
+
+    <!-- contact js -->
+    <script src="./assets/js/contact.js"></script>
+    <script src="./assets/js/jquery.form.js"></script>
+    <script src="./assets/js/jquery.validate.min.js"></script>
+    <script src="./assets/js/mail-script.js"></script>
+    <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/vue.js"></script>
+    <script src="./assets/js/axios.js"></script>
+    <script src="assets/js/elementUI/index.js"></script>
+    <script>
+
+        new Vue({
+            el:'#app',
+            data() {
+                return {
+                    tableData: [],
+                    currentPage: 1, // 当前页码
+                    total: 20, // 总条数
+                    pageSize: 10 ,// 每页的数据条数
+                    searchContent: "",
+                    tableName: 'symptom'
+                };
+            },
+            mounted(){
+                axios({
+                    methods: "get",
+                    url: "../tables/symptom",
+                }).then(resp=>{
+                    this.tableData=resp.data
+                })
+            },
+            methods: {
+                region(){
+                    axios({
+                        methods: "get",
+                        url: "../tables/region",
+                    }).then(resp=>{
+                        this.tableData=resp.data
+                    })
+                    this.tableName="region"
+                },
+                hazardfactor(){
+                    axios({
+                        methods: "get",
+                        url: "../tables/hazardfactor",
+                    }).then(resp=>{
+                        this.tableData=resp.data
+                    })
+                    this.tableName="hazardfactor"
+                },
+                workcode(){
+                    axios({
+                        methods: "get",
+                        url: "../tables/workcode",
+                    }).then(resp=>{
+                        this.tableData=resp.data
+                    })
+                    this.tableName="workcode"
+                },
+                maydisease(){
+                    axios({
+                        methods: "get",
+                        url: "../tables/maydisease",
+                    }).then(resp=>{
+                        this.tableData=resp.data
+                    })
+                    this.tableName="maydisease"
+                },
+                symptom(){
+                    axios({
+                        methods: "get",
+                        url: "../tables/symptom",
+                    }).then(resp=>{
+                        this.tableData=resp.data
+                    })
+                    this.tableName="symptom"
+                },
+                change(e){
+                    this.$forceUpdate(e)
+                },
+                search(){
+                    if(this.searchContent==''){
+                        axios({
+                            methods: "get",
+                            url: "../tables/"+this.tableName,
+                        }).then(resp=>{
+                            this.tableData=resp.data
+                        })
+                    }else{
+                        axios({
+                            methods: "get",
+                            url: "../tables/search?searchContent="+this.searchContent+
+                                "&tableName="+this.tableName,
+                        }).then(resp=>{
+                            this.tableData=resp.data
+                        })
+                    }
+                    this.searchContent=""
+                },
+                reset(){
+                    axios({
+                        methods: "get",
+                        url: "../tables/"+this.tableName,
+                    }).then(resp=>{
+                        this.tableData=resp.data
+                    })
+                },
+                //每页条数改变时触发 选择一页显示多少行
+                handleSizeChange(val) {
+                    console.log(`每页 ${val} 条`);
+                    this.currentPage = 1;
+                    this.pageSize = val;
+                },
+                //当前页改变时触发 跳转其他页
+                handleCurrentChange(val) {
+                    console.log(`当前页: ${val}`);
+                    this.currentPage = val;
+                }
+            }
+        });
+    </script>
+
+   </body>
+</html>
